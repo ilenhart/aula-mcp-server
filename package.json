@@ -1,10 +1,10 @@
 {
   "name": "@ilenhart/aula-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for real-time access to Aula.dk (Danish school portal) via Claude",
   "type": "module",
   "bin": {
-    "aula-mcp-server": "dist/index.js"
+    "aula-mcp-server": "dist/cli.js"
   },
   "main": "dist/index.js",
   "files": [
