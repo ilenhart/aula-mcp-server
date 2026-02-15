@@ -6,12 +6,14 @@ export function registerPostsTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_get_posts',
-    'Get recent posts from Aula (announcements, updates from school). Content is in Danish — Claude can translate.',
     {
-      days_back: z.number().min(1).max(30).default(3).describe('Number of days to look back (default: 3)'),
-      limit: z.number().min(1).max(50).default(10).describe('Maximum number of posts to return (default: 10)'),
+      description: 'Get recent general posts from Aula (announcements, updates from school). Content is in Danish — Claude can translate.',
+      inputSchema: {
+        days_back: z.number().min(1).max(30).default(3).describe('Number of days to look back (default: 3)'),
+        limit: z.number().min(1).max(50).default(10).describe('Maximum number of posts to return (default: 10)'),
+      },
     },
     async ({ days_back, limit }) => {
       const client = getClient();
@@ -39,6 +41,18 @@ export function registerPostsTools(
                   isImportant: p.isImportant,
                   hasAttachments: (p.attachments?.length ?? 0) > 0,
                   attachmentCount: p.attachments?.length ?? 0,
+                  attachments: p.attachments?.map((a) => ({
+                    id: a.id,
+                    name: a.name,
+                    isImage: a.IsImage(),
+                    isFile: a.IsFile(),
+                    url: a.IsImage()
+                      ? a.AsImage()?.GetFullSizeUrl()
+                      : a.AsFile()?.GetFileUrl(),
+                    thumbnailUrl: a.IsImage() ? a.AsImage()?.GetThumbnailUrl() : null,
+                    fileName: a.IsFile() ? a.AsFile()?.GetFileName() : null,
+                    creator: a.creator?.name,
+                  })) || [],
                 })),
                 null,
                 2

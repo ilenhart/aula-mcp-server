@@ -55,7 +55,7 @@ export class QRCaptureSession {
     this.lastPageRefresh = Date.now();
 
     // Give the MitID QR a moment to render
-    await this.page.waitForTimeout(3000);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     return await this.takeScreenshot();
   }
@@ -117,7 +117,7 @@ export class QRCaptureSession {
         try {
           await this.page.reload({ waitUntil: 'networkidle2', timeout: 30_000 });
           this.lastPageRefresh = Date.now();
-          await this.page.waitForTimeout(3000);
+          await new Promise((resolve) => setTimeout(resolve, 3000));
           const screenshot = await this.takeScreenshot();
           return { status: 'qr_refreshed', screenshot };
         } catch {
@@ -140,7 +140,7 @@ export class QRCaptureSession {
     try {
       await this.page.reload({ waitUntil: 'networkidle2', timeout: 30_000 });
       this.lastPageRefresh = Date.now();
-      await this.page.waitForTimeout(3000);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       return await this.takeScreenshot();
     } catch {
       return null;

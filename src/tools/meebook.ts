@@ -5,10 +5,12 @@ export function registerMeebookTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_get_meebook',
-    "Get MeeBook weekly plans and book lists for your child's class. Includes lesson plans, learning goals, and assigned reading.",
-    {},
+    {
+      description: "Get MeeBook weekly plans and book lists for your child's class. Includes lesson plans, learning goals, and assigned reading.",
+      inputSchema: {},
+    },
     async () => {
       const client = getClient();
       if (!client) {

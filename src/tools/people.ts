@@ -6,15 +6,17 @@ export function registerPeopleTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_find_people',
-    'Search for people (parents, children, teachers, employees) connected to your school on Aula.',
     {
-      name: z.string().describe('Name or partial name to search for'),
-      role: z
-        .enum(['any', 'parent', 'child', 'teacher', 'preschool_teacher', 'leader', 'employee'])
-        .default('any')
-        .describe('Filter by role (default: any)'),
+      description: 'Search for people (parents, children, teachers, employees) connected to your school on Aula.',
+      inputSchema: {
+        name: z.string().describe('Name or partial name to search for'),
+        role: z
+          .enum(['any', 'parent', 'child', 'teacher', 'preschool_teacher', 'leader', 'employee'])
+          .default('any')
+          .describe('Filter by role (default: any)'),
+      },
     },
     async ({ name, role }) => {
       const client = getClient();

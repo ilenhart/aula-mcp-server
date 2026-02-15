@@ -5,10 +5,12 @@ export function registerDailyTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_get_daily_overview',
-    "Get today's daily overview for your child (attendance status, check-in/out times, notes).",
-    {},
+    {
+      description: "Get today's daily overview for your child (attendance status, check-in/out times, notes).",
+      inputSchema: {},
+    },
     async () => {
       const client = getClient();
       if (!client) {

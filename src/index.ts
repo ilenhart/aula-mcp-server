@@ -27,6 +27,7 @@ import { registerDailyTools } from './tools/daily.js';
 import { registerGalleryTools } from './tools/gallery.js';
 import { registerPeopleTools } from './tools/people.js';
 import { registerMeebookTools } from './tools/meebook.js';
+import { registerAttachmentTools } from './tools/attachments.js';
 
 // ── Shared State ──────────────────────────────────────────────────────
 
@@ -125,6 +126,7 @@ registerDailyTools(server, () => aulaClient);
 registerGalleryTools(server, () => aulaClient);
 registerPeopleTools(server, () => aulaClient);
 registerMeebookTools(server, () => aulaClient);
+registerAttachmentTools(server);
 
 // ── Startup ───────────────────────────────────────────────────────────
 

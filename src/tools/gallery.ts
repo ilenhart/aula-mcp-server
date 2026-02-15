@@ -6,13 +6,15 @@ export function registerGalleryTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_get_gallery',
-    'Get recent photo albums and media from Aula. Returns album metadata and media URLs (not the actual images).',
     {
-      days_back: z.number().min(1).max(60).default(7).describe('Number of days to look back (default: 7)'),
-      album_limit: z.number().min(1).max(20).default(5).describe('Maximum albums to return (default: 5)'),
-      media_limit: z.number().min(1).max(50).default(10).describe('Maximum media items per album (default: 10)'),
+      description: 'Get recent photo albums and media from Aula. Returns album metadata and media URLs (not the actual images).',
+      inputSchema: {
+        days_back: z.number().min(1).max(60).default(7).describe('Number of days to look back (default: 7)'),
+        album_limit: z.number().min(1).max(20).default(5).describe('Maximum albums to return (default: 5)'),
+        media_limit: z.number().min(1).max(50).default(10).describe('Maximum media items per album (default: 10)'),
+      },
     },
     async ({ days_back, album_limit, media_limit }) => {
       const client = getClient();

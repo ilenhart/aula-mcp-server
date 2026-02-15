@@ -6,16 +6,18 @@ export function registerCalendarTools(
   server: McpServer,
   getClient: () => AulaAPIClient | null
 ) {
-  server.tool(
+  server.registerTool(
     'aula_get_calendar',
-    'Get calendar events from Aula (school events, excursions, holidays, lessons, etc.).',
     {
-      days_back: z.number().min(0).max(30).default(3).describe('Days to look back (default: 3)'),
-      days_forward: z.number().min(1).max(60).default(14).describe('Days to look forward (default: 14)'),
-      filter: z
-        .enum(['all', 'all_except_lessons', 'lessons_only', 'excursions_only', 'special_events'])
-        .default('all_except_lessons')
-        .describe('Which event types to include (default: all_except_lessons)'),
+      description: 'Get calendar events from Aula (school events, excursions, holidays, lessons, etc.).',
+      inputSchema: {
+        days_back: z.number().min(0).max(30).default(3).describe('Days to look back (default: 3)'),
+        days_forward: z.number().min(1).max(60).default(14).describe('Days to look forward (default: 14)'),
+        filter: z
+          .enum(['all', 'all_except_lessons', 'lessons_only', 'excursions_only', 'special_events'])
+          .default('all_except_lessons')
+          .describe('Which event types to include (default: all_except_lessons)'),
+      },
     },
     async ({ days_back, days_forward, filter }) => {
       const client = getClient();

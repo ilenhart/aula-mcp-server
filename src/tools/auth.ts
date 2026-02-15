@@ -23,10 +23,12 @@ export function registerAuthTools(
   }
 ) {
   // ── aula_login ──────────────────────────────────────────────────────
-  server.tool(
+  server.registerTool(
     'aula_login',
-    'Start Aula authentication. If a valid session exists, confirms it. Otherwise opens a Chrome window with the MitID QR code and returns a screenshot for you to scan with your phone.',
-    {},
+    {
+      description: 'Start Aula authentication. If a valid session exists, confirms it. Otherwise opens a Chrome window with the MitID QR code and returns a screenshot for you to scan with your phone.',
+      inputSchema: {},
+    },
     async () => {
       // First, try the existing session
       if (deps.sessionManager.isSessionAvailable()) {
@@ -80,10 +82,12 @@ export function registerAuthTools(
   );
 
   // ── aula_check_auth ─────────────────────────────────────────────────
-  server.tool(
+  server.registerTool(
     'aula_check_auth',
-    'Check if the MitID QR code was scanned and authentication completed. Call this after aula_login. May return a refreshed QR screenshot if the previous one expired.',
-    {},
+    {
+      description: 'Check if the MitID QR code was scanned and authentication completed. Call this after aula_login. May return a refreshed QR screenshot if the previous one expired.',
+      inputSchema: {},
+    },
     async () => {
       const qrSession = deps.getQRSession();
       if (!qrSession || !qrSession.isOpen) {
@@ -164,10 +168,12 @@ export function registerAuthTools(
   );
 
   // ── aula_session_status ─────────────────────────────────────────────
-  server.tool(
+  server.registerTool(
     'aula_session_status',
-    'Check if the current Aula session is valid without starting an auth flow.',
-    {},
+    {
+      description: 'Check if the current Aula session is valid without starting an auth flow.',
+      inputSchema: {},
+    },
     async () => {
       const session = deps.sessionManager.getSession();
 
